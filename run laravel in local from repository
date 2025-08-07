@@ -1,0 +1,16 @@
+Follow the method:-
+
+1.composer install  // if you got error run: composer update
+2.cp .env.example .env
+3.php artisan key:generate
+4.php artisan migrate
+5.php artisan serve
+
+
+when your projet is jwt authentication laravel project, follow this command :
+ after 3. php artisan key:generate
+ 4. php artisan jwt:secret
+ 5. php artisan cache:clear
+ 6.php artisan migrate
+ 7. php artisan serve
+
