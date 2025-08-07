@@ -1,1 +1,115 @@
+how to setup the database backup using (composer require spatie/laravel-backup) package
+
+
+    1.install the command :  composer require spatie/laravel-backup
+           * it will update the some changes in composer.json,composer.lock
+    2 To publish the config file to config/backup.php run:  php artisan vendor:publish --provider="Spatie\Backup\BackupServiceProvider" --tag=backup-config
+           * it will add the backup.php file in config folder 
+    3 Add this package for google drive access:   composer require masbug/flysystem-google-drive-ext
+
+    4 add this in the config->filesystems.php
+
+       'google' => [
+            'driver' => 'google',
+            'clientId' => env('GOOGLE_DRIVE_CLIENT_ID'),
+            'clientSecret' => env('GOOGLE_DRIVE_CLIENT_SECRET'),
+            'refreshToken' => env('GOOGLE_DRIVE_REFRESH_TOKEN'),
+            'folderId' => env('GOOGLE_DRIVE_FOLDER_ID'),
+        ],
+
+   6 add this config->backup.php
+
+           'disks' => [
+                'local',
+                'google',
+            ],
+
+   7 add .env 
+
+      GOOGLE_DRIVE_CLIENT_ID=555226254005-p83548bkog17bok8k0lnfht3hgr9hjrl.apps.googleusercontent.com
+      GOOGLE_DRIVE_CLIENT_SECRET=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
+      GOOGLE_DRIVE_REFRESH_TOKEN=1//04nmm51THrTITCgYIARAAGAQSNwF-L9IrGLUdO4xUpzB6AcDL_OV4gAl4TAFIDlqAtXW1-DXEwlMKy-NqIUT9YG2IPcs5f-MdwbU
+      GOOGLE_DRIVE_FOLDER_ID=1ZhqbNIiqlGsdL1pGNrTAjFWGnJIIXePv
+
+ 8 add this function in ServiceProvider
+
+                <?php
+            namespace App\Providers;
+            
+            use Illuminate\Support\ServiceProvider;
+            
+            class AppServiceProvider extends ServiceProvider
+            {
+                /**
+                 * Register any application services.
+                 */
+                public function register(): void
+                {
+                    //
+                }
+            
+                /**
+                 * Bootstrap any application services.
+                 */
+                public function boot()
+                {
+            
+                    $this->DbBackup();
+                }
+            
+                private function DbBackup()
+                {
+            
+                    try {
+                        \Storage::extend('google', function ($app, $config) {
+                            $options = [];
+            
+                            if (! empty($config['folderId'] ?? null)) {
+                                $options['folderId'] = $config['folderId'];
+                            }
+            
+                            $client = new \Google\Client();
+                            $client->setClientId($config['clientId']);
+                            $client->setClientSecret($config['clientSecret']);
+                            $client->refreshToken($config['refreshToken']);
+            
+                            $service = new \Google\Service\Drive($client);
+                            $adapter = new \Masbug\Flysystem\GoogleDriveAdapter($service, $config['folder'] ?? '/', $options);
+                            $driver  = new \League\Flysystem\Filesystem($adapter);
+            
+                            return new \Illuminate\Filesystem\FilesystemAdapter($driver, $adapter);
+                        });
+                    } catch (\Exception $e) {
+                        \Log::error($e->getMessage());
+                    }
+                }
+            
+            }
+
+
+  8 run -> php artisan backup:run --only-db
+
+
+
+//  laravel set up is finished -----------------------------------------------------------------------------------------------------------
+
+
+
+
+// in googledrive set up -----------------------------------------------------------------------------------------------------------------
+
+
+  1 create the folder in google drive : 
+         first folder name is laravel  then get the folder id for eample : 1bANLXLJRYjjcR-nCYn68OIpT3sRH7Vyn
+
+  note : this folder only access for particular console authenticated email aceess drive
+
+ 
+  // in https://console.cloud.google.com set up -----------------------------------------------------------------------------------------------------------------     
+
+ 1 go to this link https://console.cloud.google.com/ 
+
+ 2  
+
+
 
