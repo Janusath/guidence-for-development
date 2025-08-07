@@ -109,7 +109,42 @@ how to setup the database backup using (composer require spatie/laravel-backup) 
 
  1 go to this link https://console.cloud.google.com/ 
 
- 2  
+ 2 create the new project like  projact-backup
+
+ 3 in sidebar -> Apis & Services ->Library
+
+ 4 search the google drive api and click and enable
+
+ 5 inside bar -> credentilas-> and click the configure constant screen -> click the get started
+
+ 6 give the app name like project-backup and select the user support email and click the next button 
+      - select the external radio buton and click the next button and Contact Information email -> your login email and finished and done 
+     next -> create oauth client -> select for aplication type for -> web application and give name any
+
+ 7 in Authorized redirect URIs section add this link: https://developers.google.com/oauthplayground  -> create -> download the credential 
+
+ 8 click the audience button -> click the publish app button 
+
+ 9 click the branding button -> Authorized domains section -> click the add domain button and enter -> google.com  and save 
+
+ 10 go to https://developers.google.com/oauthplayground this page 
+    click the setting button and click the Use your own OAuth credentials checkbox 
+
+    past the credential from your downloaded credential 
+
+11 select the "Drive Api V3" 
+   and select the first link  : https://www.googleapis.com/auth/drive  and click button  // it will redirect to the another page 
+12 click the "Exchange code for tokens"
+
+13 copy the refresh token and past in your laravel project-> env file 
+
+
+14 run and test in local : php artisan backup:run --only-db
+
+// everything is finished ----------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
