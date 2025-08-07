@@ -141,6 +141,44 @@ how to setup the database backup using (composer require spatie/laravel-backup) 
 
 14 run and test in local : php artisan backup:run --only-db
 
+
+
+
+
+// when hosting time ----------------------------------------------------------------------------------------------------------
+
+
+ 1 add the shedule for backup 
+   routes-> console.php -> 
+
+        use Illuminate\Support\Facades\Schedule;
+
+
+        // Schedule::command('backup:clean')->daily()->at('01:00');
+        // Schedule::command('backup:run')->daily()->at('01:30');
+        // Schedule::command('backup:run')->everyTenMinutes();
+        // Schedule::command('backup:run')->everyMinute();
+        // Schedule::command('backup:clean')->everyMinute();
+        
+        //Backup at 10:00 AM
+        Schedule::command('backup:run')->dailyAt('10:00');
+        
+        // Backup at 5:00 PM
+        Schedule::command('backup:run')->dailyAt('17:00');
+        
+        // after 5PM backup
+        Schedule::command('backup:clean')->dailyAt('18:00'); 
+
+
+
+2 set the cron job
+   recommanded for every minuits
+
+   example: /usr/bin/php8.2 /home/billshop-dskalmunai/htdocs/dskalmunai.billshop.lk/artisan schedule:run >> /dev/null 2>&1
+
+
+
+
 // everything is finished ----------------------------------------------------------------------------------------------------------
 
 
