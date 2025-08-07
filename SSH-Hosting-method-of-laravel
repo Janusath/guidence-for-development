@@ -1,1 +1,63 @@
+SSH key generate method :
 
+in terminal;
+1 ssh-keygen -t rsa -b 4096 -C "mohamedahshan0056@gmail.com"
+    1. press Enter key without give any password
+    2. again press Enter key without give any password
+2 cat ~/.ssh/id_rsa.pub
+
+after that 
+
+2️⃣ Add Key to GitHub
+Go to GitHub → Settings → SSH and GPG keys (Click Here).
+Click "New SSH Key"
+Paste the copied key into the Key field.
+Click "Add SSH Key"
+
+finished 
+after that you can clone : git clone git@github.com:Janusath/abs-construction.git .
+
+when getting below error
+fatal: destination path '.' already exists and is not an empty directory.
+   use this command-> rm -rf .* *      // for remove all files and folders
+
+
+or 
+
+ if you have faced any issue please generete the access token 
+		how to create the access token in github? 
+				1. go to setting-> Developer Setting -> Persional access tokens -> token(classic) -> Generate new token ->generete new token (classic) -> insert new token name & check the all checkbox and enter the generate token button.
+				2. enter github user name and enter access token key  
+
+key generate finished
+
+
+
+
+SSH Hosting method of laravel
+
+
+1. open putty terminal -> enter ip & port number ->after enter userName & password.
+2. got to the domain work place using cd  ->  for Example cd domains/marazin.lk/public_html/verify
+3. clone the project from github for example -> git clone git@github.com:Janusath/abs-construction.git .
+4. composer2 update/composer update
+5. cp .env.example .env
+6. php artisan key:generate
+7. nano .env
+
+	note: if you change any value in the nano terminal 
+		how to save and exit ?
+			press Ctrl + O and press enter key and using Ctrl + X you can exit the terminal.
+
+
+8  php artisan migrate
+9. php artisan serve
+
+
+
+			
+
+note: if you want to remove the all folder&files please use this command->  rm -rf *
+note: check the target folder path using this conmmand -> pwd
+
+note: if you want to move the folder & file to another folder please use this command -> mv * /home/u838412098/domains/marazin.lk/public_html/verify
