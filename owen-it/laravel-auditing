@@ -1,0 +1,50 @@
+official side: https://laravel-auditing.com/
+
+1. install the package: composer require owen-it/laravel-auditing
+
+2. php artisan vendor:publish --provider="OwenIt\Auditing\AuditingServiceProvider" --tag="config"
+   php artisan vendor:publish --provider="OwenIt\Auditing\AuditingServiceProvider" --tag="migrations"
+
+   when you use this, It will create the audit.php file in the config folder and will create the migration table of audits table
+
+   note: when you use this :  php artisan vendor:publish --provider="OwenIt\Auditing\AuditingServiceProvider" 
+   it will create the migration and config folder 
+
+3. you have to use like this 
+
+     * import this 
+         use OwenIt\Auditing\Contracts\Auditable;
+
+     * use the class 
+      use \OwenIt\Auditing\Auditable;
+
+     * you have to implement the with the modal 
+       class ItemBrand extends Model implements Auditable
+
+       <?php
+    
+    namespace App\Models;
+    
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
+    use OwenIt\Auditing\Contracts\Auditable;
+    
+    class ItemBrand extends Model implements Auditable
+    {
+        use \OwenIt\Auditing\Auditable;
+        use HasFactory;
+        protected $table = 'item_brands';
+        protected $fillable = [
+            'item_brand_name',
+            'item_brand_description',
+    
+        ];
+    }
+
+
+ 
+
+
+
+
+
